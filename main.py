@@ -35,9 +35,15 @@ async def get_server_status(ip, port):
     try:
         server = JavaServer.lookup(f"{ip}:{port}")
         status = await server.async_status()
+
+        # Check if status.description is a string or a dictionary
+        motd = status.description
+        if isinstance(motd, dict):
+            motd = motd.get("text", str(motd))
+
         return {
             "online": True,
-            "motd": status.description.get("text", str(status.description)),
+            "motd": motd,
             "players_online": status.players.online,
             "players_max": status.players.max,
             "latency": status.latency
