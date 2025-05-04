@@ -12,6 +12,7 @@ SERVER_PORT = int(os.getenv("SERVER_PORT"))
 REFRESH_INTERVAL = 30  # seconds
 PASSWORD = os.getenv("DASHBOARD_PASSWORD")
 
+
 # ---- Basic password protection ----
 def check_password():
     if "authenticated" not in st.session_state:
@@ -25,7 +26,9 @@ def check_password():
         else:
             st.stop()
 
+
 check_password()
+
 
 # ---- Async function to check server ----
 async def get_server_status(ip, port):
@@ -45,8 +48,10 @@ async def get_server_status(ip, port):
             "error": str(e)
         }
 
+
 def get_status_sync(ip, port):
     return asyncio.run(get_server_status(ip, port))
+
 
 # ---- Streamlit Dashboard ----
 st.set_page_config(page_title="Minecraft Server Status", page_icon="🟢", layout="centered")
